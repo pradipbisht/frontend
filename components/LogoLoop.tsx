@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import "./LogoLoop.css";
 
 export type LogoItem =
@@ -75,7 +76,7 @@ const useResizeObserver = (
     return () => {
       observers.forEach((observer) => observer?.disconnect());
     };
-  }, [callback, elements]);
+  }, [...dependencies, callback, elements]); // Fix: spread dependencies and add callback, elements
 };
 
 const useImageLoader = (
@@ -115,7 +116,7 @@ const useImageLoader = (
         img.removeEventListener("error", handleImageLoad);
       });
     };
-  }, [onLoad, seqRef]);
+  }, [...dependencies, onLoad, seqRef]); // Fix: spread dependencies and add onLoad, seqRef
 };
 
 const useAnimationLoop = (
@@ -176,7 +177,7 @@ const useAnimationLoop = (
       }
       lastTimestampRef.current = null;
     };
-  }, [trackRef, seqWidth, isHovered, pauseOnHover]);
+  }, [trackRef, seqWidth, isHovered, pauseOnHover, targetVelocity]); // Fix: add targetVelocity
 };
 
 export const LogoLoop = React.memo<LogoLoopProps>(
@@ -283,17 +284,19 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           {item.node}
         </span>
       ) : (
-        <img
+        <Image
           src={item.src}
-          srcSet={item.srcSet}
-          sizes={item.sizes}
-          width={item.width}
-          height={item.height}
           alt={item.alt ?? ""}
+          width={item.width || 100}
+          height={item.height || 50}
           title={item.title}
           loading="lazy"
-          decoding="async"
           draggable={false}
+          sizes={item.sizes}
+          style={{
+            width: item.width ? `${item.width}px` : "auto",
+            height: item.height ? `${item.height}px` : "auto",
+          }}
         />
       );
 

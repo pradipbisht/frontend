@@ -15,7 +15,8 @@ async function safeJson(response: Response) {
   const text = await response.text();
   try {
     return JSON.parse(text || "null");
-  } catch (e) {
+  } catch (_e) {
+    // Fix: prefix with underscore to indicate intentionally unused
     return text;
   }
 }
@@ -119,10 +120,13 @@ export async function updateProfile(
   return res.json();
 }
 
-export default {
+// Fix: assign to variable before exporting
+const authAPI = {
   getMe,
   login,
   register,
   logout,
   updateProfile,
 };
+
+export default authAPI;
