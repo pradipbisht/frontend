@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import NavbarLogo from "./navbar-logo";
@@ -5,8 +7,11 @@ import ProfileDropDown from "./profile-dropdown";
 import { ThemeSwitch } from "./navtheme";
 import MobileMenu from "./mobilemenu";
 import { NavbarMenu } from "./navigation-menu";
+import { useAuth } from "@/contexts/AuthContext";
 
 function Navbar() {
+  const { user } = useAuth();
+
   return (
     <nav className=" bg-background sticky top-0 z-50">
       <div className="container flex h-16 items-center px-4 relative">
@@ -26,7 +31,8 @@ function Navbar() {
           {/* Desktop actions */}
           <div className="hidden md:flex items-center space-x-2">
             <ThemeSwitch />
-            <ProfileDropDown />
+            {/* Only show ProfileDropDown if user is authenticated */}
+            {user && <ProfileDropDown />}
           </div>
 
           {/* Mobile hamburger (visible only on small screens) */}
