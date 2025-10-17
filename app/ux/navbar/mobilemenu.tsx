@@ -68,9 +68,8 @@ export default function MobileMenu() {
                 ))}
               </nav>
 
-              <div className="mt-6 border-t border-border pt-4">
-                <MobileMenuAuth closeMenu={() => setOpen(false)} />
-              </div>
+              {/* Only show auth section if user is authenticated */}
+              <MobileMenuAuth closeMenu={() => setOpen(false)} />
             </div>
           </motion.aside>
         )}
@@ -82,8 +81,13 @@ export default function MobileMenu() {
 function MobileMenuAuth({ closeMenu }: { closeMenu: () => void }) {
   const { user, logout } = useAuth();
 
-  if (user) {
-    return (
+  // Only render auth section if user is authenticated
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <div className="mt-6 border-t border-border pt-4">
       <div className="flex flex-col gap-3">
         <Link
           href="/account"
@@ -100,17 +104,6 @@ function MobileMenuAuth({ closeMenu }: { closeMenu: () => void }) {
           Log out
         </button>
       </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-3">
-      <Link
-        href="/auth"
-        onClick={closeMenu}
-        className="block w-full text-center py-2 rounded-md bg-primary text-white font-medium">
-        Sign in / Sign up
-      </Link>
     </div>
   );
 }
