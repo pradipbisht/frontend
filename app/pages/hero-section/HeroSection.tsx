@@ -6,7 +6,25 @@ import { motion } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 import LoopIcons from "./LoopIcons";
 import GridAllBento from "../grid-all/GridAllBento";
+import Orb from "@/components/Orb";
+import { Playfair_Display, Cormorant_Garamond } from "next/font/google";
+
+// NOTE: Make sure CircularStamp is imported if you decide to use it,
+// otherwise keep it commented or remove the empty motion.divs.
 // import { CircularStamp } from "@/app/pages/hero-section/circular-brand";
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  style: "italic",
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["700"],
+  style: ["italic"],
+});
 
 export default function HeroSection() {
   const container = {
@@ -22,9 +40,18 @@ export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-dot-pattern">
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background z-0 pointer-events-none" />
-
+      <div className="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
+        <div className="w-[800px] h-[800px] sm:w-[1000px] sm:h-[1000px] lg:w-[1200px] lg:h-[1200px] opacity-80 dark:opacity-60">
+          <Orb
+            hoverIntensity={0.4}
+            rotateOnHover={true}
+            hue={document.documentElement.classList.contains("dark") ? 240 : 28}
+            forceHoverState={false}
+          />
+        </div>
+      </div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:py-32">
-        {/* Circular Stamp - Left Side */}
+        {/* Circular Stamp placeholders (Assuming these will be replaced with actual CircularStamp component) */}
         <motion.div
           initial={{ opacity: 0, x: -100, rotate: -180 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -34,16 +61,8 @@ export default function HeroSection() {
             ease: [0.25, 1, 0.5, 1],
             delay: 0.5,
           }}
-          className="hidden md:block absolute left-4 top-16 md:left-8 md:top-24 lg:left-16 lg:top-32 z-20">
-          {/* <CircularStamp
-            text="✨ WELLNESS • EXPERT • AI-POWERED • PERSONALIZED • "
-            centerText="🌟"
-            size="lg"
-            animate={true}
-          /> */}
-        </motion.div>
+          className="hidden md:block absolute left-4 top-16 md:left-8 md:top-24 lg:left-16 lg:top-32 z-20"></motion.div>
 
-        {/* Mobile Circular Stamp - Top Center */}
         <motion.div
           initial={{ opacity: 0, y: -50, rotate: -90 }}
           whileInView={{ opacity: 1, y: 0, rotate: 0 }}
@@ -53,34 +72,9 @@ export default function HeroSection() {
             ease: [0.25, 1, 0.5, 1],
             delay: 0.3,
           }}
-          className="md:hidden absolute left-1/2 transform -translate-x-1/2 top-4 z-20">
-          {/* <CircularStamp
-            text="✨ WELLNESS • EXPERT • AI-POWERED • "
-            centerText="🌟"
-            size="sm"
-            animate={true}
-          /> */}
-        </motion.div>
+          className="md:hidden absolute left-1/2 transform -translate-x-1/2 top-4 z-20"></motion.div>
 
-        {/* Circular Stamp - Right Side
-        <motion.div
-          initial={{ opacity: 0, x: 100, rotate: 180 }}
-          whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 2,
-            ease: [0.25, 1, 0.5, 1],
-            delay: 1,
-          }}
-          className="hidden lg:block absolute right-4 bottom-16 md:right-8 md:bottom-24 lg:right-16 lg:bottom-32 z-20">
-          <CircularStamp
-            text="🏆 TRUSTED • SCIENCE-BASED • COMMUNITY • APPROVED • "
-            centerText="💎"
-            size="md"
-            animate={true}
-          />
-        </motion.div> */}
-
+        {/* Main Content */}
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -96,19 +90,15 @@ export default function HeroSection() {
             </Badge>
           </motion.div>
 
-          {/* motion.h1 */}
           <motion.h1
             initial={{ opacity: 0, y: 60, scale: 0.94 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
             transition={{
-              duration: 1.6, // slower reveal
-              ease: [0.16, 1, 0.3, 1], // smooth classic ease
+              duration: 1.6,
+              ease: [0.16, 1, 0.3, 1],
             }}
-            className="relative text-3xl uppercase md:text-5xl font-extrabold tracking-tight 
-             bg-clip-text text-transparent 
-             bg-gradient-to-r from-primary via-primary/50 to-primary/25 
-             animate-gradient-shine leading-tight">
+            className={`relative text-3xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/50 to-primary/25 animate-gradient-shine leading-tight italic ${cormorant.variable}`}>
             Your All-in-One Wellness & <br className="hidden sm:inline" />
             Lifestyle Companion 🌿
             {/* elegant underline */}
@@ -121,9 +111,7 @@ export default function HeroSection() {
                 duration: 1.4,
                 ease: [0.25, 1, 0.5, 1],
               }}
-              className="absolute bottom-0 left-0 h-[2px] w-full 
-               bg-gradient-to-r from-primary/60 via-primary/40 to-transparent 
-               rounded-full origin-left"
+              className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-primary/60 via-primary/40 to-transparent rounded-full origin-left"
             />
           </motion.h1>
 

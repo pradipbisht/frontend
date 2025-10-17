@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import ClientProviders from "@/components/client-providers";
@@ -8,13 +8,13 @@ import Navbar from "./ux/navbar/navbar";
 import Footer from "./ux/footer";
 // import Footer from "@/components/ux/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const robotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
   subsets: ["latin"],
 });
 
@@ -30,16 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${robotoMono.variable}`}>
+      <body className="font-sans bg-background min-h-screen antialiased">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClientProviders>
-            <Toaster position="top-right" />
+            <Toaster richColors position="top-center" />
             <Navbar />
             <main className="min-h-screen">{children}</main>
             <Footer />
